@@ -1,0 +1,35 @@
+/* 壮族主题色：靛蓝底 + 金色文字 */
+body {
+    margin: 0;
+    background: #1a2b4c; /* 深靛蓝 */
+    font-family: "Microsoft YaHei", "苹方", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.hero {
+    text-align: center;
+    color: #e6c04c; /* 铜鼓金色 */
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 0.2em;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2em;
+    opacity: 0.9;
+}
+
+#countdown {
+    font-size: 2rem;
+    background: rgba(0,0,0,0.3);
+    padding: 0.5em 1.5em;
+    border-radius: 50px;
+    display: inline-block;
+}
