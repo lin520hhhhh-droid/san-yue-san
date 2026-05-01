@@ -395,3 +395,18 @@ function hexToRgb(hex) {
     createDyes();
     drawRice();
 })();
+// --- 故事面板滚动淡入 ---
+const storyPanels = document.querySelectorAll('.story-panel');
+
+function checkStoryPanels() {
+    const triggerBottom = window.innerHeight * 0.8;
+    storyPanels.forEach(panel => {
+        const panelTop = panel.getBoundingClientRect().top;
+        if (panelTop < triggerBottom) {
+            panel.classList.add('visible');
+        }
+    });
+}
+
+window.addEventListener('scroll', checkStoryPanels);
+checkStoryPanels(); // 初始检查

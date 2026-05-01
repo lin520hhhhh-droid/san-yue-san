@@ -1,17 +1,19 @@
-/* 壮族主题色：靛蓝底 + 金色文字 */
 body {
     margin: 0;
     background: #1a2b4c; /* 深靛蓝 */
     font-family: "Microsoft YaHei", "苹方", sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    color: #e6c04c;      /* 壮锦金色，原来少了一位 */
+    overflow-x: hidden;   /* 防止横向滚动条 */
 }
 
 .hero {
+    min-height: 100vh;          /* 至少一屏高 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    /* 垂直居中 */
+    align-items: center;        /* 水平居中 */
     text-align: center;
-    color: #e6c04c; /* 铜鼓金色 */
+    padding: 20px;
     text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
@@ -108,4 +110,104 @@ h1 {
     font-size: 1.5rem;
     color: #f5c542;
     min-height: 3em;
+}
+/* ==================== 文化故事滚动叙事 ==================== */
+.story-panel {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    /* 核心视差属性：背景固定 */
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    /* 默认背景色，下方单独定义每个章节的背景图（可以用CSS图案） */
+}
+
+/* 每个章节用不同的“壮锦纹样”背景，这里用CSS渐变模拟几何纹样 */
+#story1 {
+    background-color: #1a2b4c; /* 深靛蓝底 */
+    background-image: 
+        repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(230,192,76,0.05) 10px, rgba(230,192,76,0.05) 20px),
+        radial-gradient(circle at 20% 30%, rgba(230,192,76,0.1) 0%, transparent 30%);
+}
+
+#story2 {
+    background-color: #2d1b3a; /* 紫底象征五色饭的紫 */
+    background-image: 
+        linear-gradient(135deg, rgba(255,255,255,0.03) 25%, transparent 25%),
+        linear-gradient(225deg, rgba(255,255,255,0.03) 25%, transparent 25%);
+    background-size: 60px 60px;
+}
+
+#story3 {
+    background-color: #3b2b1a; /* 暗棕，抢花炮的尘烟感 */
+    background-image: 
+        radial-gradient(circle at 50% 50%, rgba(230,192,76,0.15) 0%, transparent 50%),
+        repeating-linear-gradient(0deg, transparent, transparent 8px, rgba(255,255,255,0.03) 8px, rgba(255,255,255,0.03) 10px);
+}
+
+#story4 {
+    background-color: #1a3b2b; /* 绿底，春天 */
+    background-image: 
+        repeating-linear-gradient(30deg, rgba(230,192,76,0.05) 0px, rgba(230,192,76,0.05) 15px, transparent 15px, transparent 30px);
+}
+
+/* 内容块 */
+.story-content {
+    max-width: 700px;
+    text-align: center;
+    color: #f0e6c5;
+    background: rgba(0, 0, 0, 0.45);
+    padding: 40px 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(230,192,76,0.25);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    /* 让内容块轻微上浮，突出视差 */
+    transform: translateY(-5%);
+    transition: transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.story-panel.visible .story-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.story-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.8em;
+    color: #e6c04c;
+}
+
+.story-content p {
+    font-size: 1.2rem;
+    line-height: 1.9;
+    margin-bottom: 1.2em;
+    opacity: 0.95;
+}
+
+.story-content .invite {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #f5c542;
+    margin-top: 1.5em;
+}
+
+/* 移动端：背景固定效果不好，退化为 scroll */
+@media (max-width: 768px) {
+    .story-panel {
+        background-attachment: scroll;
+    }
+    .story-content {
+        transform: none;
+        padding: 30px 20px;
+    }
+    .story-content h2 {
+        font-size: 2rem;
+    }
 }
