@@ -20,7 +20,7 @@ function updateCountdown() {
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
     const seconds = Math.floor((diff / 1000) % 60);
 
-    document.getElementById('countdown').innerHTML = 
+    document.getElementById('countdown-text').textContent =
         `距离三月三还有 ${days} 天 ${hours} 时 ${minutes} 分 ${seconds} 秒`;
 }
 
@@ -58,9 +58,9 @@ setInterval(updateCountdown, 1000);
    // 饭团轮廓：底部宽大，向上逐层收拢，顶部中央凸起
 const riceParts = [
     // 底层——最宽大的基底（像饭碗扣出来的大圆底）
-    { x: 0.50, y: 0.58, r: 0.27 }, 
-    { x: 0.30, y: 0.52, r: 0.22 },   
-    { x: 0.70, y: 0.52, r: 0.22 },   
+    { x: 0.50, y: 0.58, r: 0.27 },
+    { x: 0.30, y: 0.52, r: 0.22 },
+    { x: 0.70, y: 0.52, r: 0.22 },
     // 中层——开始收拢，但保持饱满
     { x: 0.35, y: 0.38, r: 0.22 },
     { x: 0.65, y: 0.38, r: 0.22 },
@@ -333,7 +333,7 @@ function hexToRgb(hex) {
 
         if (partColors[hitPartIndex] >= 0) {
             // 已经染过其他颜色，本次替换颜色，但filledCount不增不减
-            // （如果需要巩固记忆，可以提示“已染色，替换颜色”）
+            // （如果需要巩固记忆，可以提示"已染色，替换颜色"）
         } else {
             // 新染色
             filledCount++;
@@ -410,3 +410,224 @@ function checkStoryPanels() {
 
 window.addEventListener('scroll', checkStoryPanels);
 checkStoryPanels(); // 初始检查
+
+// --- 移动端导航切换 ---
+document.querySelector('.nav-toggle')?.addEventListener('click', () => {
+    document.querySelector('.nav-links')?.classList.toggle('open');
+});
+
+// 点击导航链接后自动收起菜单
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        document.querySelector('.nav-links')?.classList.remove('open');
+    });
+});
+
+// --- 联系表单提交 ---
+document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const feedback = document.getElementById('formFeedback');
+    feedback.textContent = '✅ 感谢您的咨询！我们会尽快通过邮件回复您。';
+    e.target.reset();
+    setTimeout(() => { feedback.textContent = ''; }, 5000);
+});
+(function() {
+    var cv = document.getElementById('bambooCanvas');
+    if (!cv) return;
+    var cx = cv.getContext('2d');
+    var scoreEl = document.getElementById('bambooScore');
+    var levelEl = document.getElementById('bambooLevel');
+    var restartBtn = document.getElementById('bambooRestart');
+
+    var W = cv.width, H = cv.height;
+    var N = 4, PW = 155, PH = 14; // poles count, pole width, pole height
+    var GAP_MAX = 100, GAP_MIN = 12;
+
+    var frame = 0, score = 0, level = 1, speed = 1;
+    var state = 'playing'; // playing, gameover, victory
+    var dLevel = -1;       // dancer level: -1=start, 0-3=past a pole, 4=victory
+    var dy = H - 60, targetY = H - 60;
+
+    // Pole Y positions (bottom to top) and phases
+    var pY = [], pPhase = [];
+    function resetPoles() {
+        pY = []; pPhase = [];
+        var s = H * 0.72;
+        var step = (s - 85) / (N - 1);
+        for (var i = 0; i < N; i++) {
+            pY.push(s - step * i);
+            pPhase.push(i * Math.PI * 0.6 + (i % 2) * 0.5);
+        }
+    }
+    resetPoles();
+
+    function gap(i) {
+        var t = Math.sin(frame * 0.045 * speed + pPhase[i]);
+        return (t + 1) / 2 * (GAP_MAX - GAP_MIN) + GAP_MIN;
+    }
+    function isOpen(i) { return gap(i) > GAP_MAX * 0.4; }
+
+    // Main draw function - everything in one call to avoid function boundary issues
+    function drawAll() {
+        // 1. Background
+        var g = cx.createLinearGradient(0, 0, 0, H);
+        g.addColorStop(0, '#1a2b4c');
+        g.addColorStop(0.5, '#1f3460');
+        g.addColorStop(1, '#152240');
+        cx.fillStyle = g;
+        cx.fillRect(0, 0, W, H);
+
+        // 2. Bamboo poles
+        var cp = W / 2;
+        for (var i = 0; i < N; i++) {
+            var gv = gap(i);
+            var py = pY[i] - PH / 2;
+            var lx = cp - gv / 2 - PW;
+            var rx = cp + gv / 2;
+
+            cx.fillStyle = '#6B9B37';
+            cx.fillRect(lx, py, PW, PH);
+            cx.fillRect(rx, py, PW, PH);
+            cx.fillStyle = '#8BC34A';
+            cx.fillRect(lx + 2, py + 1, PW - 4, PH * 0.35);
+            cx.fillRect(rx + 2, py + 1, PW - 4, PH * 0.35);
+        }
+
+        // 3. Ground
+        var gy = H - 14;
+        cx.fillStyle = '#3D2B1F';
+        cx.fillRect(0, gy, W, 14);
+        cx.fillStyle = '#5D8A3C';
+        cx.fillRect(0, gy - 2, W, 3);
+
+        // 4. Dancer
+        if (dy > -30) {
+            // Skirt (red)
+            cx.fillStyle = '#E74C3C';
+            cx.beginPath();
+            cx.moveTo(cp - 8, dy);
+            cx.lineTo(cp + 8, dy);
+            cx.lineTo(cp + 11, dy + 11);
+            cx.lineTo(cp - 11, dy + 11);
+            cx.closePath();
+            cx.fill();
+            // Top (green)
+            cx.fillStyle = '#2ECC71';
+            cx.fillRect(cp - 6, dy - 14, 12, 14);
+            // Head
+            cx.fillStyle = '#FFD5A0';
+            cx.beginPath();
+            cx.arc(cp, dy - 18, 12, 0, Math.PI * 2);
+            cx.fill();
+            // Hair
+            cx.fillStyle = '#2C1810';
+            cx.beginPath();
+            cx.arc(cp, dy - 21, 11, Math.PI, 2 * Math.PI);
+            cx.fill();
+            cx.beginPath();
+            cx.arc(cp, dy - 25, 4.5, 0, Math.PI * 2);
+            cx.fill();
+            // Eyes
+            cx.fillStyle = '#1a1a1a';
+            cx.beginPath();
+            cx.arc(cp - 3, dy - 19, 1.5, 0, Math.PI * 2);
+            cx.fill();
+            cx.beginPath();
+            cx.arc(cp + 3, dy - 19, 1.5, 0, Math.PI * 2);
+            cx.fill();
+        }
+
+        // 5. HUD
+        cx.fillStyle = 'rgba(0,0,0,0.35)';
+        cx.fillRect(0, 0, W, 26);
+        cx.fillStyle = '#f0e6c5';
+        cx.font = '13px sans-serif';
+        cx.textAlign = 'left';
+        cx.fillText('❤️ ' + (N - dLevel), 12, 18);
+        cx.textAlign = 'right';
+        cx.fillText('×' + speed.toFixed(1), W - 12, 18);
+    }
+
+    // Game over / victory overlay
+    function drawOverlay(text, sub, color) {
+        cx.fillStyle = 'rgba(0,0,0,0.55)';
+        cx.fillRect(0, 0, W, H);
+        cx.textAlign = 'center';
+        cx.fillStyle = color;
+        cx.font = 'bold 32px sans-serif';
+        cx.fillText(text, W / 2, H / 2 - 20);
+        cx.fillStyle = '#f0e6c5';
+        cx.font = '17px sans-serif';
+        cx.fillText(sub, W / 2, H / 2 + 20);
+        cx.fillStyle = '#b0a080';
+        cx.font = '13px sans-serif';
+        cx.fillText('点击继续', W / 2, H / 2 + 52);
+    }
+
+    function loop() {
+        try {
+            frame++;
+            dy += (targetY - dy) * 0.13;
+            if (Math.abs(dy - targetY) < 0.3) dy = targetY;
+
+            drawAll();
+
+            if (state === 'gameover') {
+                drawOverlay('😵 夹到脚了！', '得分: ' + score + '  |  第 ' + level + ' 关', '#E74C3C');
+            } else if (state === 'victory') {
+                drawOverlay('🎉 全部通过！', '得分: ' + score + '  |  下一关 ×' + Math.min(3, speed + 0.25).toFixed(1), '#F1C40F');
+            }
+
+            requestAnimationFrame(loop);
+        } catch (e) { console.error('bamboo:', e); }
+    }
+
+    function handleClick() {
+        if (state === 'gameover') { resetGame(); return; }
+        if (state === 'victory') {
+            level++;
+            speed = Math.min(3, 1 + (level - 1) * 0.25);
+            levelEl.textContent = level;
+            dLevel = -1;
+            targetY = H - 60;
+            dy = H - 60;
+            state = 'playing';
+            return;
+        }
+        var next = dLevel + 1;
+        if (next >= N) {
+            dLevel = N;
+            targetY = 20;
+            score += 20;
+            scoreEl.textContent = score;
+            state = 'victory';
+            return;
+        }
+        if (isOpen(next)) {
+            dLevel = next;
+            targetY = (next === N - 1) ? 40 : (pY[next] + pY[next + 1]) / 2;
+            score += 10;
+            scoreEl.textContent = score;
+        } else {
+            state = 'gameover';
+        }
+    }
+
+    function resetGame() {
+        score = 0;
+        level = 1;
+        speed = 1;
+        dLevel = -1;
+        targetY = H - 60;
+        dy = H - 60;
+        state = 'playing';
+        scoreEl.textContent = '0';
+        levelEl.textContent = '1';
+        resetPoles();
+    }
+
+    cv.addEventListener('click', handleClick);
+    cv.addEventListener('touchstart', function(e) { e.preventDefault(); handleClick(); });
+    restartBtn.addEventListener('click', resetGame);
+    requestAnimationFrame(loop);
+})();

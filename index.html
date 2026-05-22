@@ -7,53 +7,285 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="hero">
+    <nav class="navbar">
+        <div class="nav-brand">🌸 三月三</div>
+        <ul class="nav-links">
+            <li><a href="#home">首页</a></li>
+            <li><a href="#game">五色饭</a></li>
+            <li><a href="#stories">文化故事</a></li>
+            <li><a href="#guide">节庆攻略</a></li>
+            <li><a href="#food">美食指南</a></li>
+            <li><a href="#xiuqiuGame">抛绣球</a></li>
+            <li><a href="#quiz">答题</a></li>
+            <li><a href="#contact">联系我们</a></li>
+        </ul>
+        <button class="nav-toggle" aria-label="菜单">☰</button>
+    </nav>
+    <div class="hero" id="home">
         <h1>🎵 广西三月三</h1>
         <p class="subtitle">歌海壮乡情</p>
-        <div id="countdown">加载中...</div>
+        <div id="countdown">
+            <img src="assets/images/xiouqiu-icon.jpg" class="xiouqiu-icon" alt="绣球">
+            <span id="countdown-text">加载中...</span>
+        </div>
     </div>
+
     <!-- 五色糯米饭上色游戏 -->
-<section class="game-section">
-    <h2>🎨 五色糯米饭 · 吉祥上色</h2>
-    <p class="game-desc">把染料拖到饭团上，做出你的吉祥五彩饭吧！</p>
-    <div class="game-container">
-        <div class="dyes" id="dyes"></div>
-        <canvas id="riceCanvas" width="500" height="400"></canvas>
-    </div>
-    <div class="game-message" id="gameMessage"></div>
-</section>
-<!-- ==================== 文化故事滚动叙事 ==================== -->
-<section class="story-panel" id="story1">
-    <div class="story-content">
-        <h2>🎤 歌仙刘三姐</h2>
-        <p>相传唐代，壮乡有一位女子名叫刘三姐，她天生一副好嗓子，出口成歌。财主不许百姓唱山歌，刘三姐就带领乡亲们用歌声反抗，吓得财主节节败退。</p>
-        <p>每年三月三，人们便聚在歌圩上，用对歌来纪念这位歌仙，也用以传情、择偶、赛智慧。</p>
-    </div>
-</section>
+    <section class="game-section" id="game">
+        <h2>🎨 五色糯米饭 · 吉祥上色</h2>
+        <p class="game-desc">把染料拖到饭团上，做出你的吉祥五彩饭吧！</p>
+        <div class="game-container">
+            <div class="dyes" id="dyes"></div>
+            <canvas id="riceCanvas" width="500" height="400"></canvas>
+        </div>
+        <div class="game-message" id="gameMessage"></div>
+    </section>
 
-<section class="story-panel" id="story2">
-    <div class="story-content">
-        <h2>🍚 五色糯米饭的由来</h2>
-        <p>传说古时壮家英雄出征，妻子用红兰草、蝶豆花、枫叶等植物染出五色米，祈求平安归来。后来演变成三月三必吃的美食。</p>
-        <p>五色象征：红（兴旺）、黄（丰收）、蓝（健康）、紫（吉祥）、黑（驱邪）。吃一碗五色饭，全年顺耐（壮语：顺利）。</p>
-    </div>
-</section>
+    <!-- ==================== 文化故事滚动叙事 ==================== -->
+    <div id="stories">
+    <section class="story-panel" id="story1">
+        <div class="story-content">
+            <h2>🎤 歌仙刘三姐</h2>
+            <p>相传唐代，壮乡有一位女子名叫刘三姐，她天生一副好嗓子，出口成歌。财主不许百姓唱山歌，刘三姐就带领乡亲们用歌声反抗，吓得财主节节败退。</p>
+            <p>每年三月三，人们便聚在歌圩上，用对歌来纪念这位歌仙，也用以传情、择偶、赛智慧。</p>
+        </div>
+    </section>
 
-<section class="story-panel" id="story3">
-    <div class="story-content">
-        <h2>🏮 抢花炮 · 抛绣球</h2>
-        <p>抢花炮被称为“东方橄榄球”，一声炮响，铁环飞向空中，各村壮汉蜂拥争抢，抢到者象征得到整年的好运。</p>
-        <p>抛绣球则是青年男女的传情方式，姑娘若看上哪个小伙子，就把绣球抛给他，接住便是缘分。</p>
-    </div>
-</section>
+    <section class="story-panel" id="story2">
+        <div class="story-content">
+            <h2>🍚 五色糯米饭的由来</h2>
+            <p>传说古时壮家英雄出征，妻子用红兰草、蝶豆花、枫叶等植物染出五色米，祈求平安归来。后来演变成三月三必吃的美食。</p>
+            <p>五色象征：红（兴旺）、黄（丰收）、蓝（健康）、紫（吉祥）、黑（驱邪）。吃一碗五色饭，全年顺耐（壮语：顺利）。</p>
+        </div>
+    </section>
 
-<section class="story-panel" id="story4">
-    <div class="story-content">
-        <h2>🌺 壮乡三月三</h2>
-        <p>2014年，“壮族三月三”被列入国家级非物质文化遗产。如今每到这一天，广西全区放假，人们穿上盛装，赶歌圩、尝美食、祭祖先。</p>
-        <p class="invite">—— 欢迎来广西，一起体验歌海壮乡的春天！</p>
+    <section class="story-panel" id="story3">
+        <div class="story-content">
+            <h2>🏮 抢花炮 · 抛绣球</h2>
+            <p>抢花炮被称为"东方橄榄球"，一声炮响，铁环飞向空中，各村壮汉蜂拥争抢，抢到者象征得到整年的好运。</p>
+            <p>抛绣球则是青年男女的传情方式，姑娘若看上哪个小伙子，就把绣球抛给他，接住便是缘分。</p>
+        </div>
+    </section>
+
+    <section class="story-panel" id="story4">
+        <div class="story-content">
+            <h2>🌺 壮乡三月三</h2>
+            <p>2014年，"壮族三月三"被列入国家级非物质文化遗产。如今每到这一天，广西全区放假，人们穿上盛装，赶歌圩、尝美食、祭祖先。</p>
+            <p class="invite">—— 欢迎来广西，一起体验歌海壮乡的春天！</p>
+        </div>
+    </section>
     </div>
-</section>
+
+    <!-- ==================== 节庆攻略 ==================== -->
+    <section class="guide-section" id="guide">
+        <h2>🗺️ 三月三 · 旅游攻略</h2>
+        <p class="section-desc">想去广西体验三月三？这份攻略带你玩转歌海壮乡！</p>
+
+        <div class="guide-grid">
+            <div class="guide-card">
+                <div class="card-icon">📍</div>
+                <h3>最佳体验地</h3>
+                <ul>
+                    <li><strong>南宁</strong> — 主会场，大型歌圩、民族巡游</li>
+                    <li><strong>桂林·阳朔</strong> — 山水间的对歌盛会</li>
+                    <li><strong>柳州</strong> — 鱼峰山歌圩，刘三姐传说发源地</li>
+                    <li><strong>河池·宜州</strong> — 原生态壮族民俗</li>
+                </ul>
+            </div>
+
+            <div class="guide-card">
+                <div class="card-icon">🚗</div>
+                <h3>交通方式</h3>
+                <ul>
+                    <li><strong>高铁</strong> — 南宁东站/桂林站，全国主要城市直达</li>
+                    <li><strong>飞机</strong> — 南宁吴圩机场、桂林两江机场</li>
+                    <li><strong>自驾</strong> — 广西高速路网完善，租车便捷</li>
+                    <li><strong>当地</strong> — 建议包车或跟团，节庆期间公交较挤</li>
+                </ul>
+            </div>
+
+            <div class="guide-card">
+                <div class="card-icon">🏨</div>
+                <h3>住宿推荐</h3>
+                <ul>
+                    <li><strong>南宁</strong> — 朝阳商圈/民歌湖附近，近主会场</li>
+                    <li><strong>桂林</strong> — 两江四湖沿线，夜景绝佳</li>
+                    <li><strong>阳朔</strong> — 西街民宿，体验当地生活</li>
+                    <li><strong>提醒</strong> — 三月三是旅游旺季，建议提前1个月预订</li>
+                </ul>
+            </div>
+
+            <div class="guide-card">
+                <div class="card-icon">📅</div>
+                <h3>3天2晚推荐行程</h3>
+                <ul>
+                    <li><strong>Day 1</strong> — 抵达南宁，逛青秀山庙会，晚观大型歌舞</li>
+                    <li><strong>Day 2</strong> — 赴桂林/阳朔，参加漓江歌圩，体验抛绣球</li>
+                    <li><strong>Day 3</strong> — 尝五色饭等美食，购买壮锦纪念品，返程</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 美食指南 ==================== -->
+    <section class="food-section" id="food">
+        <h2>🍜 三月三 · 美食指南</h2>
+        <p class="section-desc">来广西过三月三，这些地道美食不容错过！</p>
+
+        <div class="food-grid">
+            <div class="food-card">
+                <img src="assets/images/t0191da7aa8b79f9b45.jpg" alt="五色糯米饭" class="food-img" loading="lazy">
+                <div class="food-info">
+                    <h3>五色糯米饭</h3>
+                    <p>用红兰草、蝶豆花、枫叶等天然植物染色，象征吉祥如意。这是三月三最具代表性的美食。</p>
+                </div>
+            </div>
+
+            <div class="food-card">
+                <img src="assets/images/story-rice.jpg" alt="艾叶糍粑" class="food-img" loading="lazy">
+                <div class="food-info">
+                    <h3>艾叶糍粑</h3>
+                    <p>用艾草汁和糯米制成，清香软糯。三月三踏青采艾，做成糍粑，是春天的味道。</p>
+                </div>
+            </div>
+
+            <div class="food-card">
+                <img src="assets/images/1.jpg" alt="恭城油茶" class="food-img" loading="lazy">
+                <div class="food-info">
+                    <h3>恭城油茶</h3>
+                    <p>"一杯苦，二杯涩，三杯四杯好油茶。" 搭配炒米、花生、葱花，是广西人待客的暖身茶饮。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 竹竿舞挑战 ==================== -->
+    <section class="bamboo-section" id="bambooGame">
+        <h2>🎋 竹竿舞挑战</h2>
+        <p class="section-desc">竹竿一开一合，看准时机让舞者跳过去！夹到脚就输了！</p>
+        <div class="bamboo-wrapper">
+            <canvas id="bambooCanvas" width="500" height="450"></canvas>
+            <div class="bamboo-hud">
+                <span>得分: <strong id="bambooScore">0</strong></span>
+                <span class="bamboo-level">第 <span id="bambooLevel">1</span> 关</span>
+                <button id="bambooRestart">🔄 重来</button>
+            </div>
+            <div class="bamboo-audio">
+                <button id="musicToggle" class="music-btn">🎵 音乐</button>
+                <input type="range" id="musicVolume" class="volume-slider" min="0" max="1" step="0.05" value="0.5">
+                <span class="volume-label" id="volumeLabel">50%</span>
+            </div>
+            <audio id="bambooMusic" src="assets/audio/bamboo-music.mp3" loop preload="auto"></audio>
+            <div class="bamboo-rank-input" id="rankInput" style="display:none">
+                <p>🎉 新纪录！输入名字保存成绩</p>
+                <div class="rank-input-row">
+                    <input type="text" id="rankName" placeholder="你的名字" maxlength="8" class="rank-name-input">
+                    <button id="rankSaveBtn">保存</button>
+                </div>
+            </div>
+            <div class="bamboo-rank" id="rankBoard">
+                <div class="rank-header" id="rankToggle">🏆 排行榜 <span class="rank-arrow">▼</span></div>
+                <div class="rank-body" id="rankBody">
+                    <table class="rank-table">
+                        <thead><tr><th>#</th><th>名字</th><th>得分</th><th>关卡</th></tr></thead>
+                        <tbody id="rankList"></tbody>
+                    </table>
+                    <p class="rank-empty" id="rankEmpty">暂无记录，快来挑战吧！</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 抛绣球 ==================== -->
+    <section class="xiuqiu-section" id="xiuqiuGame">
+        <h2>🌸 抛绣球 · 抢球大赛</h2>
+        <p class="section-desc">前方高台少女抛绣球，和伙伴们一起抢！看谁先抢到！</p>
+        <div class="xiuqiu-wrapper">
+            <canvas id="xiuqiuCanvas" width="560" height="420"></canvas>
+            <div class="xiuqiu-hud">
+                <span>🏆 <strong id="xiuqiuScore">0</strong> 分</span>
+                <span class="xiuqiu-round"><span id="xiuqiuRound" style="display:none">0</span>⏱ <strong id="xiuqiuTimer">90</strong>s</span>
+                <span class="xiuqiu-msg" id="xiuqiuMsg"></span>
+                <button id="xiuqiuRestart">🔄 重开</button>
+            </div>
+            <div class="xiuqiu-audio">
+                <button id="xiuqiuMusicToggle" class="music-btn">🎵 音乐</button>
+                <input type="range" id="xiuqiuVolume" class="volume-slider" min="0" max="1" step="0.05" value="0.5">
+                <span class="volume-label" id="xiuqiuVolumeLabel">50%</span>
+            </div>
+            <audio id="xiuqiuMusic" src="assets/audio/xiuqiu-music.mp3" loop preload="auto"></audio>
+        </div>
+    </section>
+
+    <!-- ==================== 三月三知识答题 ==================== -->
+    <section class="quiz-section" id="quiz">
+        <h2>🧠 三月三知识答题</h2>
+        <p class="section-desc">五道选择题，全对解锁隐藏壮锦壁纸！</p>
+        <div class="quiz-box" id="quizBox">
+            <div class="quiz-progress" id="quizProgress">
+                <span>第 <span id="quizCurrent">1</span> / 5 题</span>
+                <span>✅ <span id="quizCorrect">0</span></span>
+            </div>
+            <div class="quiz-question" id="quizQuestion"></div>
+            <div class="quiz-options" id="quizOptions"></div>
+            <div class="quiz-feedback" id="quizFeedback"></div>
+        </div>
+        <div class="quiz-wallpaper" id="quizWallpaper">
+            <div class="wallpaper-overlay">
+                <h3>🎉 恭喜全部答对！</h3>
+                <p>你已解锁隐藏壮锦壁纸 🧧</p>
+                <div class="wallpaper-pattern" id="wallpaperPattern"></div>
+                <p class="wallpaper-hint">壮锦——中国四大名锦之一，壮族千年织锦工艺的瑰宝。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 联系我们 ==================== -->
+    <section class="contact-section" id="contact">
+        <h2>💬 咨询留言</h2>
+        <p class="section-desc">对三月三之旅有疑问？欢迎留言，我们会尽快回复！</p>
+
+        <form class="contact-form" id="contactForm">
+            <div class="form-row">
+                <input type="text" placeholder="您的姓名" required class="form-input">
+                <input type="email" placeholder="电子邮箱" required class="form-input">
+            </div>
+            <select class="form-input form-select" required>
+                <option value="">感兴趣的内容</option>
+                <option>行程咨询</option>
+                <option>住宿推荐</option>
+                <option>美食攻略</option>
+                <option>节庆活动</option>
+                <option>其他</option>
+            </select>
+            <textarea placeholder="留言内容..." rows="4" required class="form-input form-textarea"></textarea>
+            <button type="submit" class="form-btn">发送咨询 ✉️</button>
+            <p class="form-feedback" id="formFeedback"></p>
+        </form>
+    </section>
+
+    <!-- ==================== 页脚 ==================== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>🌸 广西三月三 · 歌海壮乡情</h3>
+                <p>旅游接待业课程作业 — 展示壮乡文化魅力，传递旅游服务温度。</p>
+            </div>
+            <div class="footer-links">
+                <a href="#home">首页</a>
+                <a href="#guide">节庆攻略</a>
+                <a href="#food">美食指南</a>
+                <a href="#contact">联系我们</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 广西三月三文化旅游 · 课程作业 | 部分图片来源于网络，仅用于教学</p>
+            </div>
+        </div>
+    </footer>
+
     <script src="script.js"></script>
+    <script src="bamboo-game.js?v=2"></script>
+    <script src="xiuqiu-game.js?v=2"></script>
+    <script src="quiz-game.js"></script>
 </body>
 </html>
