@@ -631,3 +631,45 @@ document.getElementById('contactForm')?.addEventListener('submit', (e) => {
     restartBtn.addEventListener('click', resetGame);
     requestAnimationFrame(loop);
 })();
+
+// --- AI 行程规划 ---
+document.getElementById('tripForm')?.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    var btn = document.getElementById('tripBtn');
+    var loading = document.getElementById('tripLoading');
+    var result = document.getElementById('tripResult');
+    var content = document.getElementById('tripContent');
+    if (!btn || !loading || !result || !content) return;
+    var days = document.getElementById('tripDays')?.value || '3';
+    var from = document.getElementById('tripFrom')?.value || '';
+    var companions = document.getElementById('tripCompanions')?.value || '独行';
+    var budget = document.getElementById('tripBudget')?.value || '舒适';
+    var interests = [];
+    document.querySelectorAll('#tripTags input:checked').forEach(function(cb) { interests.push(cb.value); });
+    btn.disabled = true;
+    btn.textContent = '⏳ 生成中...';
+    loading.style.display = 'block';
+    result.style.display = 'none';
+    try {
+        var resp = await fetch('/api/itinerary', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ days: days, from: from, interests: interests, companions: companions, budget: budget })
+        });
+        var data = await resp.json();
+        loading.style.display = 'none';
+        if (data.ok) {
+            content.innerHTML = data.data.replace(/\n/g, '<br>');
+            result.style.display = 'block';
+        } else {
+            content.innerHTML = '<p style="color:#E74C3C">' + (data.msg || '生成失败') + '</p>';
+            result.style.display = 'block';
+        }
+    } catch(e) {
+        loading.style.display = 'none';
+        content.innerHTML = '<p style="color:#E74C3C">网络错误，请稍后再试</p>';
+        result.style.display = 'block';
+    }
+    btn.disabled = false;
+    btn.textContent = '🚀 生成行程';
+});

@@ -97,7 +97,7 @@ body {
 }
 
 /* 锚点滚动补偿 */
-.hero, .game-section, #stories, .guide-section, .food-section, .bamboo-section, .xiuqiu-section, .quiz-section, .contact-section {
+.hero, .game-section, #stories, .guide-section, .food-section, .bamboo-section, .xiuqiu-section, .quiz-section, .trip-section, .contact-section {
     scroll-margin-top: 70px;
 }
 
@@ -954,6 +954,185 @@ h1 {
     scroll-margin-top: 70px;
 }
 
+/* ==================== 行程规划 ==================== */
+.trip-section {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(180deg, #2C1A4C 0%, #1A2B4C 100%);
+}
+
+.trip-form {
+    max-width: 560px;
+    margin: 0 auto;
+    background: rgba(44, 28, 76, 0.4);
+    border: 1px solid rgba(232, 184, 76, 0.12);
+    border-radius: 20px;
+    padding: 28px 24px;
+    text-align: left;
+}
+
+.trip-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.trip-field {
+    flex: 1;
+    margin-bottom: 16px;
+}
+
+.trip-field label {
+    display: block;
+    color: #b0a080;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+}
+
+.trip-input {
+    width: 100%;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(232, 184, 76, 0.15);
+    border-radius: 10px;
+    color: #f0e6c5;
+    font-size: 0.95rem;
+    outline: none;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.trip-input:focus {
+    border-color: #E8B84C;
+}
+
+.trip-input option {
+    background: #2C1A4C;
+    color: #f0e6c5;
+}
+
+.trip-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.trip-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(232, 184, 76, 0.12);
+    border-radius: 20px;
+    color: #f0e6c5;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    user-select: none;
+}
+
+.trip-tag:has(input:checked) {
+    background: rgba(232, 184, 76, 0.15);
+    border-color: #E8B84C;
+}
+
+.trip-tag input { display: none; }
+
+.trip-btn {
+    width: 100%;
+    padding: 14px;
+    background: #E8B84C;
+    border: none;
+    border-radius: 30px;
+    color: #1A2B4C;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-family: inherit;
+    margin-top: 4px;
+}
+
+.trip-btn:hover { background: #f0c860; }
+
+.trip-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 加载动画 */
+.trip-loading {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.trip-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(232, 184, 76, 0.15);
+    border-top-color: #E8B84C;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.trip-loading p {
+    color: #b0a080;
+    font-size: 0.95rem;
+}
+
+/* 结果 */
+.trip-result {
+    max-width: 700px;
+    margin: 24px auto 0;
+}
+
+.trip-result-content {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(232, 184, 76, 0.1);
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: left;
+    color: #f0e6c5;
+    line-height: 1.8;
+    font-size: 0.95rem;
+}
+
+.trip-result-content h3 {
+    color: #E8B84C;
+    font-size: 1.15rem;
+    margin: 16px 0 8px;
+}
+
+.trip-result-content h3:first-child {
+    margin-top: 0;
+}
+
+.trip-result-content strong {
+    color: #f0e6c5;
+}
+
+.trip-result-content ul {
+    padding-left: 20px;
+    margin: 6px 0;
+}
+
+.trip-result-content li {
+    margin-bottom: 4px;
+}
+
+.trip-print {
+    margin-top: 12px;
+    max-width: 200px;
+}
+
+@media (max-width: 500px) {
+    .trip-row { flex-direction: column; gap: 0; }
+}
+
 /* ==================== 联系我们 ==================== */
 .contact-section {
     text-align: center;
@@ -1187,4 +1366,51 @@ h1 {
 
 .guide-card li strong {
     color: #f0e6c5;
+}
+
+/* ==================== 打印样式 ==================== */
+@media print {
+    /* 隐藏所有非行程结果的内容 */
+    body > *:not(.trip-section),
+    .trip-section > *:not(.trip-result),
+    .trip-form,
+    .trip-loading,
+    .trip-btn:not(.trip-print),
+    .navbar,
+    .footer {
+        display: none !important;
+    }
+
+    .trip-section {
+        padding: 0 !important;
+        background: none !important;
+    }
+
+    .trip-result {
+        display: block !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .trip-result-content {
+        border: none !important;
+        background: none !important;
+        padding: 20px !important;
+        color: #000 !important;
+        font-size: 12px !important;
+        line-height: 1.6 !important;
+    }
+
+    .trip-result-content h3 {
+        color: #1A2B4C !important;
+    }
+
+    .trip-print {
+        display: none !important;
+    }
+
+    .trip-section h2,
+    .trip-section .section-desc {
+        display: none !important;
+    }
 }

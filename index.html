@@ -17,6 +17,7 @@
             <li><a href="#food">美食指南</a></li>
             <li><a href="#xiuqiuGame">抛绣球</a></li>
             <li><a href="#quiz">答题</a></li>
+            <li><a href="#trip">行程</a></li>
             <li><a href="#contact">联系我们</a></li>
         </ul>
         <button class="nav-toggle" aria-label="菜单">☰</button>
@@ -237,6 +238,67 @@
                 <div class="wallpaper-pattern" id="wallpaperPattern"></div>
                 <p class="wallpaper-hint">壮锦——中国四大名锦之一，壮族千年织锦工艺的瑰宝。</p>
             </div>
+        </div>
+    </section>
+
+    <!-- ==================== 行程规划 ==================== -->
+    <section class="trip-section" id="trip">
+        <h2>🗺️ AI 行程规划</h2>
+        <p class="section-desc">告诉我想法，AI 帮你生成专属三月三行程！</p>
+        <form class="trip-form" id="tripForm">
+            <div class="trip-row">
+                <div class="trip-field">
+                    <label>游玩天数</label>
+                    <select id="tripDays" class="trip-input">
+                        <option value="1">1 天</option>
+                        <option value="2">2 天</option>
+                        <option value="3" selected>3 天</option>
+                        <option value="4">4 天</option>
+                        <option value="5">5 天</option>
+                    </select>
+                </div>
+                <div class="trip-field">
+                    <label>出发地</label>
+                    <input type="text" id="tripFrom" class="trip-input" placeholder="如：广州" value="广州">
+                </div>
+            </div>
+            <div class="trip-field">
+                <label>兴趣偏好（可多选）</label>
+                <div class="trip-tags" id="tripTags">
+                    <label class="trip-tag"><input type="checkbox" value="美食" checked>🍜 美食</label>
+                    <label class="trip-tag"><input type="checkbox" value="民俗">🎭 民俗</label>
+                    <label class="trip-tag"><input type="checkbox" value="自然风光">🏔️ 自然风光</label>
+                    <label class="trip-tag"><input type="checkbox" value="拍照打卡">📸 拍照打卡</label>
+                </div>
+            </div>
+            <div class="trip-row">
+                <div class="trip-field">
+                    <label>同行人员</label>
+                    <select id="tripCompanions" class="trip-input">
+                        <option value="独行">独行</option>
+                        <option value="情侣" selected>情侣</option>
+                        <option value="朋友结伴">朋友结伴</option>
+                        <option value="带老人小孩">带老人小孩</option>
+                    </select>
+                </div>
+                <div class="trip-field">
+                    <label>预算档次</label>
+                    <select id="tripBudget" class="trip-input">
+                        <option value="经济">💰 经济</option>
+                        <option value="舒适" selected>💵 舒适</option>
+                        <option value="轻奢">✨ 轻奢</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="trip-btn" id="tripBtn">🚀 生成行程</button>
+        </form>
+        <div class="trip-result" id="tripResult" style="display:none">
+            <div class="trip-result-content" id="tripContent"></div>
+            <button class="trip-btn trip-print" onclick="window.print()">🖨️ 打印 / 导出</button>
+        </div>
+        <div class="trip-loading" id="tripLoading" style="display:none">
+            <div class="trip-spinner"></div>
+            <p>AI 正在规划你的三月三之旅...</p>
         </div>
     </section>
 
