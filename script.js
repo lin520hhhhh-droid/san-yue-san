@@ -395,25 +395,43 @@ function hexToRgb(hex) {
     createDyes();
     drawRice();
 })();
-// --- 故事面板滚动淡入 ---
+// --- 全局滚动淡入动画 ---
+const fadeSections = document.querySelectorAll('.hero, .game-section, .guide-section, .food-section, .bamboo-section, .xiuqiu-section, .quiz-section, .trip-section, .contact-section');
+
+fadeSections.forEach(s => {
+    if (s.id !== 'home') s.classList.add('fade-section');
+});
+
+// Story panels keep their own animation
 const storyPanels = document.querySelectorAll('.story-panel');
 
-function checkStoryPanels() {
-    const triggerBottom = window.innerHeight * 0.8;
+function checkVisible() {
+    const triggerBottom = window.innerHeight * 0.85;
+    fadeSections.forEach(s => {
+        if (!s.classList.contains('fade-section')) return;
+        const top = s.getBoundingClientRect().top;
+        if (top < triggerBottom) s.classList.add('visible');
+    });
     storyPanels.forEach(panel => {
-        const panelTop = panel.getBoundingClientRect().top;
-        if (panelTop < triggerBottom) {
-            panel.classList.add('visible');
-        }
+        const top = panel.getBoundingClientRect().top;
+        if (top < triggerBottom) panel.classList.add('visible');
     });
 }
 
-window.addEventListener('scroll', checkStoryPanels);
-checkStoryPanels(); // 初始检查
+window.addEventListener('scroll', checkVisible);
+checkVisible();
 
-// --- 移动端导航切换 ---
+// --- 移动端导航切换（带动画）---
 document.querySelector('.nav-toggle')?.addEventListener('click', () => {
-    document.querySelector('.nav-links')?.classList.toggle('open');
+    const links = document.querySelector('.nav-links');
+    links?.classList.toggle('open');
+});
+
+// 点击导航链接后自动收起菜单（延迟让动画播完）
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        setTimeout(() => document.querySelector('.nav-links')?.classList.remove('open'), 150);
+    });
 });
 
 // 点击导航链接后自动收起菜单

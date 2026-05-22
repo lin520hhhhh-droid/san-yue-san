@@ -2,6 +2,32 @@ html {
     scroll-behavior: smooth;
 }
 
+/* ==================== 全局入场动画 ==================== */
+.fade-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 图片懒加载占位 */
+img[loading="lazy"] {
+    background: linear-gradient(110deg, rgba(255,255,255,0.04) 30%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 70%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+img[loading="lazy"]:not([src]) { min-height: 160px; }
+
 body {
     margin: 0;
     background: #2C1A4C;
@@ -70,7 +96,6 @@ body {
 /* 移动端导航 */
 @media (max-width: 768px) {
     .nav-links {
-        display: none;
         position: absolute;
         top: 60px;
         left: 0;
@@ -78,17 +103,29 @@ body {
         flex-direction: column;
         background: rgba(44, 28, 76, 0.98);
         border-bottom: 1px solid rgba(230, 192, 76, 0.2);
-        padding: 8px 0;
+        padding: 0;
         gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, padding 0.3s ease;
     }
 
     .nav-links.open {
-        display: flex;
+        max-height: 400px;
+        padding: 8px 0;
     }
 
     .nav-links a {
         border-radius: 0;
         padding: 12px 24px;
+        opacity: 0;
+        transform: translateY(-8px);
+        transition: opacity 0.25s ease 0.1s, transform 0.25s ease 0.1s;
+    }
+
+    .nav-links.open a {
+        opacity: 1;
+        transform: translateY(0);
     }
 
     .nav-toggle {
@@ -1413,4 +1450,66 @@ h1 {
     .trip-section .section-desc {
         display: none !important;
     }
+}
+
+/* ==================== 移动端精细打磨 ==================== */
+@media (max-width: 480px) {
+    h1 { font-size: 2rem !important; }
+    h2 { font-size: 1.6rem !important; }
+    .subtitle { font-size: 1rem !important; }
+    #countdown { font-size: 1rem !important; padding: 0.4em 1em !important; }
+
+    /* 各 section 间距 */
+    .game-section, .guide-section, .food-section,
+    .bamboo-section, .xiuqiu-section, .quiz-section,
+    .trip-section, .contact-section {
+        padding: 40px 14px !important;
+    }
+
+    /* 卡片间距 */
+    .guide-grid, .food-grid {
+        gap: 14px !important;
+    }
+    .guide-card, .food-card {
+        padding: 16px !important;
+    }
+
+    /* 游戏 canvas 圆角 */
+    #bambooCanvas, #xiuqiuCanvas, #riceCanvas {
+        border-radius: 12px !important;
+    }
+
+    /* 瀑布流 HUD 紧凑 */
+    .bamboo-hud, .xiuqiu-hud {
+        padding: 8px 10px !important;
+        font-size: 0.85rem !important;
+        gap: 4px !important;
+    }
+
+    /* 音频控件 */
+    .bamboo-audio, .xiuqiu-audio {
+        padding: 6px 10px !important;
+        gap: 6px !important;
+    }
+    .volume-slider { width: 50px !important; }
+
+    /* 答题区 */
+    .quiz-box { padding: 20px 16px !important; }
+    .quiz-opt { padding: 10px 12px !important; font-size: 0.9rem !important; }
+
+    /* 行程表 */
+    .trip-form { padding: 20px 16px !important; }
+    .trip-tags { gap: 6px !important; }
+    .trip-tag { font-size: 0.8rem !important; padding: 4px 10px !important; }
+
+    /* 排行榜 */
+    .rank-table { font-size: 0.75rem !important; }
+    .rank-table td, .rank-table th { padding: 4px 6px !important; }
+
+    /* 图片 */
+    .food-img { height: 140px !important; }
+
+    /* 导航栏 */
+    .navbar { padding: 0 12px !important; }
+    .nav-brand { font-size: 1rem !important; }
 }
