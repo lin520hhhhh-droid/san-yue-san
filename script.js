@@ -405,6 +405,16 @@ fadeSections.forEach(s => {
 // Story panels keep their own animation
 const storyPanels = document.querySelectorAll('.story-panel');
 
+// IntersectionObserver 兜底：入视即显，比 scroll 事件更可靠
+if (window.IntersectionObserver) {
+    const obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+            if (e.isIntersecting) e.target.classList.add('visible');
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.story-panel, .fade-section').forEach(function(el) { obs.observe(el); });
+}
+
 function checkVisible() {
     const triggerBottom = window.innerHeight * 0.85;
     fadeSections.forEach(s => {
@@ -419,7 +429,11 @@ function checkVisible() {
 }
 
 window.addEventListener('scroll', checkVisible);
+
+// 立即检查 + 延迟检查确保渲染后触发
 checkVisible();
+setTimeout(checkVisible, 300);
+setTimeout(checkVisible, 1000);
 
 // --- 移动端导航切换（带动画）---
 document.querySelector('.nav-toggle')?.addEventListener('click', () => {
