@@ -120,6 +120,12 @@ body {
     .nav-toggle {
         display: block;
         -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        padding: 12px 16px;
+        z-index: 1001;
+    }
+    .navbar {
+        z-index: 999;
     }
 }
 
