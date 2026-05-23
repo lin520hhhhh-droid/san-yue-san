@@ -338,7 +338,9 @@ h1 {
 /* 移动端：背景固定效果不好，退化为 scroll */
 @media (max-width: 768px) {
     .story-panel {
-        background-attachment: scroll;
+        background-attachment: scroll !important;
+        background-size: cover !important;
+        background-position: center !important;
     }
     .story-content {
         transform: none;
