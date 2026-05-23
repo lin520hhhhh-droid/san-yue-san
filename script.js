@@ -435,17 +435,26 @@ checkVisible();
 setTimeout(checkVisible, 300);
 setTimeout(checkVisible, 1000);
 
-// --- 移动端导航切换（带动画）---
-document.querySelector('.nav-toggle')?.addEventListener('click', () => {
-    const links = document.querySelector('.nav-links');
-    links?.classList.toggle('open');
-});
+// --- 移动端导航切换（兼容 iOS）---
+const navToggle = document.querySelector('.nav-toggle');
+const navLinks = document.querySelector('.nav-links');
 
-// 点击导航链接后自动收起菜单（延迟让动画播完）
+function toggleNav() {
+    navLinks?.classList.toggle('open');
+}
+
+if (navToggle) {
+    navToggle.addEventListener('click', toggleNav);
+    navToggle.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        toggleNav();
+    }, { passive: false });
+}
+
+// 点击/触摸导航链接后自动收起菜单
 document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        setTimeout(() => document.querySelector('.nav-links')?.classList.remove('open'), 150);
-    });
+    link.addEventListener('click', () => { navLinks?.classList.remove('open'); });
+    link.addEventListener('touchstart', function() { navLinks?.classList.remove('open'); });
 });
 
 // 点击导航链接后自动收起菜单

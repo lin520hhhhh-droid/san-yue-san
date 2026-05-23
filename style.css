@@ -96,6 +96,7 @@ body {
 /* 移动端导航 */
 @media (max-width: 768px) {
     .nav-links {
+        display: none;
         position: absolute;
         top: 60px;
         left: 0;
@@ -103,33 +104,22 @@ body {
         flex-direction: column;
         background: rgba(44, 28, 76, 0.98);
         border-bottom: 1px solid rgba(230, 192, 76, 0.2);
-        padding: 0;
+        padding: 8px 0;
         gap: 0;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease, padding 0.3s ease;
     }
 
     .nav-links.open {
-        max-height: 400px;
-        padding: 8px 0;
+        display: flex;
     }
 
     .nav-links a {
         border-radius: 0;
         padding: 12px 24px;
-        opacity: 0;
-        transform: translateY(-8px);
-        transition: opacity 0.25s ease 0.1s, transform 0.25s ease 0.1s;
-    }
-
-    .nav-links.open a {
-        opacity: 1;
-        transform: translateY(0);
     }
 
     .nav-toggle {
         display: block;
+        -webkit-tap-highlight-color: transparent;
     }
 }
 
